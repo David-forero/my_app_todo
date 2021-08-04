@@ -4,6 +4,7 @@ import Modal from './Modal'
 import RenameProject from './RenameProject';
 import {TodoContext} from '../context';
 import firebase from '../firebase';
+import {useSpring, animated, useTransition} from '@react-spring/web';
 
 const Project = ({project, edit}) => {
    // CONTEXT
@@ -11,6 +12,16 @@ const Project = ({project, edit}) => {
 
    // STATE
    const [showModal, setShowModal] = useState(false)
+
+   const fadeIn = useSpring({
+       from: {marginTop: '-12px', opacity: 0},
+       to: {marginTop: '0px', opacity: 1}
+   })
+   const btnTransition = useTransition(edit, {
+        from: {opacity: 0, right: '-20px'},
+        enter: {opacity: 1, right: '-00px'},
+        leave: {opacity: 0, right: '-20px'},
+   });
 
    const deleteProject = project => {
        firebase
@@ -38,7 +49,7 @@ const Project = ({project, edit}) => {
    }
 
    return (
-       <div className='Project'>
+       <animated.div style={fadeIn} className='Project'>
            <div
                className="name"
                onClick={ () => setSelectedProject(project.name)}
@@ -47,34 +58,36 @@ const Project = ({project, edit}) => {
            </div>
            <div className="btns">
                {
-                   edit ?
-                   <div className="edit-delete">
-                       <span
-                           className="edit"
-                           onClick={ () => setShowModal(true)}
-                       >
-                           <Pencil size="13" />
-                       </span>
-                       <span
-                           className="delete"
-                           onClick={ () => deleteProject(project)}
-                       >
-                           <XCircle size="13" />
-                       </span>
-                   </div>
-                   :
-                   project.numOfTodos === 0 ?
-                   ""
-                   :
-                   <div className="total-todos">
-                       {project.numOfTodos}
-                   </div>
+                   btnTransition((props, editProject) =>
+                    editProject ?
+                    <animated.div style={props} className="edit-delete">
+                        <span
+                            className="edit"
+                            onClick={ () => setShowModal(true)}
+                        >
+                            <Pencil size="13" />
+                        </span>
+                        <span
+                            className="delete"
+                            onClick={ () => deleteProject(project)}
+                        >
+                            <XCircle size="13" />
+                        </span>
+                    </animated.div>
+                    :
+                    project.numOfTodos === 0 ?
+                    ""
+                    :
+                    <animated.div style={props} className="total-todos">
+                        {project.numOfTodos}
+                    </animated.div>
+                   )
                }
            </div>
            <Modal showModal={showModal} setShowModal={setShowModal}>
                <RenameProject project={project} setShowModal={setShowModal}/>
            </Modal>
-       </div>
+       </animated.div>
    )
 }
 
