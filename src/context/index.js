@@ -1,22 +1,29 @@
-import React, {createContext, useState} from 'react'
-import {useTodos, useProjects, useFilterTodos} from '../hooks';
-const TodoContext = createContext();
+import React, { createContext, useState } from 'react'
+import { useTodos, useProjects, useFilterTodos, useProjectsWithStats } from '../hooks'
 
-function TodoContextProvider({children}) {
+const TodoContext = createContext()
+
+function TodoContextProvider({children}){
     const defaultProject = 'today'
     const [selectedProject, setSelectedProject] = useState(defaultProject)
+    const [selectedTodo, setSelectedTodo] = useState(undefined)
 
-    const todos = useTodos();
-    const projects = useProjects(todos)
+    const todos = useTodos()
+    const projects = useProjects()
+    const projectsWithStats = useProjectsWithStats(projects, todos)
     const filteredTodos = useFilterTodos(todos, selectedProject)
-    return(
+
+    return (
         <TodoContext.Provider
             value={
                 {
+                    defaultProject,
                     selectedProject,
                     setSelectedProject,
-                    todos: filteredTodos,
-                    projects
+                    todos : filteredTodos,
+                    projects : projectsWithStats,
+                    selectedTodo,
+                    setSelectedTodo
                 }
             }
         >
@@ -25,4 +32,4 @@ function TodoContextProvider({children}) {
     )
 }
 
-export {TodoContextProvider, TodoContext}
+export { TodoContextProvider, TodoContext }
