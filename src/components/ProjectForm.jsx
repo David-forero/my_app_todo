@@ -1,7 +1,7 @@
 import React from 'react'
 
 function ProjectForm({handleSubmit, heading, value, setValue, setShowModal, confirmButtonText}){
-
+    
     return (
         <form onSubmit={handleSubmit} className='ProjectForm'>
             <h3>{heading}</h3>
@@ -12,10 +12,16 @@ function ProjectForm({handleSubmit, heading, value, setValue, setShowModal, conf
                 placeholder='project name...'
                 autoFocus
             />
-            <button className='cancel' role='button' onClick={() => setShowModal(false)}>
+            
+            <button 
+                className='cancel' 
+                role='button' 
+                onClick={() => setShowModal(false)}
+                type="button"
+            >
                 cancel
             </button>
-            <button className="confirm">
+            <button className="confirm" type="submit">
                 {confirmButtonText}
             </button>
         </form>

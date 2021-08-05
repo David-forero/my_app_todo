@@ -37,7 +37,7 @@ const EditTodo = () => {
                     projectName : todoProject
                 })
         }
-
+        // eslint-disable-next-line
     }, [text, day, time, todoProject])
 
     function handleSubmit(e){
