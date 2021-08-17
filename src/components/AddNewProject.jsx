@@ -1,13 +1,15 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import Modal from './Modal'
 import ProjectForm from './ProjectForm'
 import { Plus } from 'react-bootstrap-icons'
-import firebase from '../firebase'
+import firebase from '../firebase';
+import { TodoContext } from '../context';
 
 function AddNewProject(){
     // STATE
     const [showModal, setShowModal] = useState(false)
-    const [projectName, setProjectName] = useState('')
+    const [projectName, setProjectName] = useState('');
+    const {currentUser} = useContext(TodoContext);
 
     function handleSubmit(e){
         e.preventDefault()
@@ -23,6 +25,7 @@ function AddNewProject(){
                         projectsRef
                             .add(
                                 {
+                                    user: currentUser.uid,
                                     name : projectName
                                 }
                             )

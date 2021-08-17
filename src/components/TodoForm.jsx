@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Bell, CalendarDate, Clock, Palette, X } from "react-bootstrap-icons";
 import {
   DatePicker,
@@ -54,7 +53,7 @@ const TodoForm = ({ handlesubmit, heading, setText, text, day, setDay, time, set
               <div className="title">
                 <Palette />
 
-                <p>Choose a projec</p>
+                <p>Choose a project</p>
               </div>
 
               <div className="projects">

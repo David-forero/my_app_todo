@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react';
+import {useState, useContext, useEffect} from 'react';
 import { CaretUp, Palette, PencilFill } from 'react-bootstrap-icons'
 import { TodoContext } from '../context';
 import AddNewProject from './AddNewProject'
@@ -6,12 +6,18 @@ import Project from './Project'
 import {useSpring, animated} from '@react-spring/web';
 
 const Projects = () => {
+   
+
     const [showMenu, setShowMenu] = useState(true);
     const [edit, setEdit] = useState(false);
     const pencilColor = edit ? "#1EC94C" : "#00000"
-   
-    const {projects} = useContext(TodoContext);
+    const [orderProject, setOrderProject] = useState([]);
+    const {projects, currentUser} = useContext(TodoContext);
 
+    useEffect(() => {
+        let data = projects.filter(project => project.user === currentUser.uid)
+        setOrderProject(data)
+    }, [projects])
     const spin = useSpring({
         transform: showMenu ? 'rotate(0deg)' : 'rotate(180deg)',
         config: {friction: 10}
@@ -31,7 +37,7 @@ const Projects = () => {
                 </div>
                 <div className="btns">
                     {
-                        showMenu && projects.length > 0 &&
+                        showMenu && orderProject.length > 0 &&
                         <span className='edit' onClick={ () => setEdit(edit => !edit)}>
                             <PencilFill size="15" color={pencilColor}/>
                         </span>
@@ -48,7 +54,7 @@ const Projects = () => {
             </div>
             <animated.div style={menuAnimation} className="items">
                 {
-                    projects.map( project => 
+                    orderProject.map( project => 
                         <Project
                             project={project}
                             key={project.id}

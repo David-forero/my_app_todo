@@ -25,6 +25,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <title>Nightcode - Todo</title>
   </head>
   <body>
@@ -40,5 +41,20 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
   </body>
+
+  <script>
+    
+    $(document).ready(function() {
+    var el = document.querySelector('.img-btn');
+    if(el){
+      el.addEventListener('click', function()
+      {
+        document.querySelector('.cont').classList.toggle('s-signup')
+      }
+    );
+    }
+    });
+  </script>
 </html>

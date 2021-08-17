@@ -8,7 +8,7 @@ import { calendarItems } from '../constants';
 import randomcolor from 'randomcolor';
 
 const AddNewTodo = () => {
-  const {selectedProject, projects} = useContext(TodoContext)
+  const {selectedProject, projects, currentUser} = useContext(TodoContext)
 
 
   const [showModal, setShowModal] = useState(false);
@@ -29,14 +29,15 @@ const AddNewTodo = () => {
             .firestore()
             .collection('todos')
             .add(
-                {
+                {   
                     text : text,
                     date : moment(day).format('MM/DD/YYYY'),
                     day : moment(day).format('d'),
                     time : moment(time).format('hh:mm A'),
                     checked : false,
                     color : randomcolor({luminosity: 'dark'}),
-                    projectName : todoProject
+                    projectName : todoProject,
+                    user: currentUser.uid
                 }
             )
 

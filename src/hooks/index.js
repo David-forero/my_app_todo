@@ -66,7 +66,8 @@ export function useProjects(){
             const data = snapshot.docs.map( doc => {
                 return {
                     id : doc.id,
-                    name : doc.data().name
+                    name : doc.data().name,
+                    user: doc.data().user
                 }
             })
             setProjects(data)

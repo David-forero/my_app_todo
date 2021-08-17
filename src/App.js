@@ -1,29 +1,19 @@
-//Components
-import AddNewTodo from './components/AddNewTodo';
-import Calendar from './components/Calendar';
-import EditTodo from './components/EditTodo';
-import Sidebar from './components/Sidebar';
-import Main from './components/Main';
-import Projects from './components/Projects';
-import Todos from './components/Todos';
-import User from './components/User';
+import {BrowserRouter as Router, Switch} from 'react-router-dom';
 
 import './App.css';
+import Dashboard from './Dashboard'
+import Login from './Login';
+import {PrivateRoute, Authform} from './PrivateRoutes.routes';
+
 
 function App() {
   return (
-    <div className="App">
-        <Sidebar>
-          <User/>
-          <AddNewTodo/>
-          <Calendar/>
-          <Projects/>
-        </Sidebar>
-        <Main>
-          <Todos/>
-          <EditTodo/>
-        </Main>
-    </div>
+    <Router>
+        <Switch>
+          <Authform path="/" component={Login} exact/>
+          <PrivateRoute path="/dashboard" component={Dashboard}/>
+        </Switch>
+    </Router>
   );
 }
 
